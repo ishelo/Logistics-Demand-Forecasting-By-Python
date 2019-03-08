@@ -8,7 +8,9 @@ import xlrd,xlwt
 def printIntro():
     print("这个程序可用于加权滑动预测法")
     print("请将相关数据及权重按要求填写到填写到input.xlsx")
-    print("注意：权值由小到大，从左到右依次填写在第一行")
+    print('''请注意：权值由小到大，从左到右依次填写在第一行;
+重新运行文件请关闭excel的文件，防止文件被其他应用占用。''')
+    input("请输入任意字符继续")
     print("-" * 30)
 
 def datainput():    #导入数据
@@ -70,18 +72,24 @@ def set_style(name, height, bold=False):
     style.font = font
     return style
 
-def write_excel(forecast, dvalue, average, m, n, data):    #写入文件
+def write_excel(forecast, dvalue, average, m, n, data, weights):    #写入文件
     f = xlwt.Workbook()
     sheet1 = f.add_sheet(u'sheet1', cell_overwrite_ok=True)
-    row0 = [u'实际值', u'预测值', u'绝对误差', u'平均绝对误差']
-    for i in range(0, len(row0)):
-        sheet1.write(0, i, row0[i], set_style('Times New Roman', 220, True))
+    row1 = [u'时间', u'实际值', u'预测值', u'绝对误差', u'平均绝对误差']
+    sheet1.write(0, 0, '权值', set_style('Times New Roman', 220, True))
+    for i in range(n):
+        sheet1.write(0, i+1, weights[i], set_style('Times New Roman', 220, True))
+    for i in range(0, len(row1)):
+        sheet1.write(1, i, row1[i], set_style('Times New Roman', 220, True))
+    for i in range(m+1):
+        sheet1.write(i+2, 0, i+1, set_style('Times New Roman', 220, True))
     for i in range(len(data)):
-        sheet1.write(i+1, 0, data[i], set_style('Times New Roman', 220, True))
-    for i in range(n,m):
-        sheet1.write(i+1, 1, forecast[i-n], set_style('Times New Roman', 220, True))
-        sheet1.write(i+1, 2, dvalue[i-n], set_style('Times New Roman', 220, True))
-    sheet1.write(1, 3, average, set_style('Times New Roman', 220, True))
+        sheet1.write(i+2, 1, data[i], set_style('Times New Roman', 220, True))
+    for i in range(n,m+1):
+        sheet1.write(i+2, 2, forecast[i-n], set_style('Times New Roman', 220, True))
+    for i in range(n, m):
+        sheet1.write(i+2, 3, dvalue[i-n], set_style('Times New Roman', 220, True))
+    sheet1.write(2, 4, average, set_style('Times New Roman', 220, True))
     f.save('out.xls')
     print("已经将数据写入out.xls")
 
@@ -90,6 +98,6 @@ def mian():
     data, weights, n, m= datainput()
     forecast, dvalue,average = action(data, weights, n, m)
     print_Summary(forecast, dvalue, average, n)
-    write_excel(forecast, dvalue, average, m, n, data)
+    write_excel(forecast, dvalue, average, m, n, data, weights)
 
 mian()
