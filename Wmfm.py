@@ -58,8 +58,8 @@ def action(data, weights, n, m):
 
 
 def print_Summary(forecast, dvalue, average, n):    #输出结果并保存在表格
-    print("从第{n}个时期起，预测值为".format(n=n), forecast)
-    print("从第{n}个时期起，绝对误差值为".format(n=n), dvalue)
+    print("从第{n}个时期起，预测值为".format(n=n+1), forecast)
+    print("从第{n}个时期起，绝对误差值为".format(n=n+1), dvalue)
     print("其平均绝对误差值为", average)
 
 def set_style(name, height, bold=False):
