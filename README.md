@@ -9,6 +9,6 @@ Single exponential smoothing by python
 
 使用方法：下载文件，确保input.xlsx和mian.py在同一个文件夹，将数据导入到input.xlsx，pip install requirements.txt安装依赖，运行mian.py文件
 
-# Double_exponential_smoothing & Triple exponential smoothing
+# exponential_smoothing
 Double exponential smoothing and Triple exponential smoothing by python
 具体使用方法参照ipynb文件。
