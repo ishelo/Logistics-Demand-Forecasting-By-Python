@@ -12,3 +12,6 @@ Single exponential smoothing by python
 # exponential_smoothing
 Double exponential smoothing and Triple exponential smoothing by python
 具体使用方法参照ipynb文件。
+
+# Gray_model
+灰色y预测模型
